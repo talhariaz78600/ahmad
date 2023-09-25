@@ -43,11 +43,10 @@ router.put('/createitem/:id',async(req,res)=>{
     });
 })
 router.get('/getprojects', async(req,res)=>{
-  const projectname=req.header('projectname')
  try {
  const data=await Projects.find({})
   .select('projectname projectImage')
-  res.json({data})
+  res.json(data)
  } catch (error) {
   res.json({error});
  }

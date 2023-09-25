@@ -43,6 +43,7 @@ router.post('/adminlogin', async (req, res) => {
     try {
       const {adminname, password } = req.body;
       let admin = await Admin.findOne({adminname});
+      let success=false;
       if (!admin) {
         return res.status(400).json({success, error: "please try to login correct credentials" })
       }
