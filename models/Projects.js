@@ -28,9 +28,13 @@ const projectSchema = new Schema({
         required: true,
         unique: true
     },
-    projectItems: [itemSchema] 
+    projectItems: [itemSchema] ,
+    projectdescription:{
+        type: String,
+        required: true,
+    }
 });
-
+projectSchema.index({ name: 1 }, { maxTimeMS: 20000 });
 
 module.exports = mongoose.model('projects', projectSchema);
 

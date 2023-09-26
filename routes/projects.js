@@ -6,16 +6,19 @@ const Projects=require('../models/Projects');
 router.post('/createproject',[
     body('projectname', 'please enter the project name').isLength({ min: 4 }), async (req, res) => {
         const errors = validationResult(req);
+        let success=false;
         if (!errors.isEmpty()) {
-          return res.status(400).json({ errors: errors.array() });
+          return res.status(400).json({ success,errors: errors.array() });
         }
         try {
             const project= await Projects.create({
               projectname:req.body.projectname,
               projectImage:req.body.projectImage,
-              projectItems: req.body.projectItems 
+              projectItems: req.body.projectItems ,
+              projectdescription:req.body.projectdescription
             })
-            res.json({project})
+            success=true;
+            res.json({project,success})
             
         } catch (error) {
             res.json({error});
@@ -29,7 +32,7 @@ router.put('/createitem/:id',async(req,res)=>{
     itemname:req.body.itemname,
     itemdescription:req.body.itemdescription,
     itemphoto:req.body.itemphoto,
-    itemUrl:req.body.itemUrl
+    itemUrl:req.body.itemUrl,
   }
  await Projects.findOneAndUpdate(
     { _id: id },
@@ -45,12 +48,21 @@ router.put('/createitem/:id',async(req,res)=>{
 router.get('/getprojects', async(req,res)=>{
  try {
  const data=await Projects.find({})
-  .select('projectname projectImage')
+  .select('projectname projectImage projectdescription')
   res.json(data)
  } catch (error) {
   res.json({error});
  }
 })
+router.get('/getprojectsname', async(req,res)=>{
+  try {
+  const data=await Projects.find({})
+   .select('projectname')
+   res.json(data)
+  } catch (error) {
+   res.json({error});
+  }
+ })
 router.delete('/deleteproject/:id', async (req, res) => {
   try {
     const documentId = req.params.id;
