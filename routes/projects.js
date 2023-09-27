@@ -117,7 +117,7 @@ router.get('/getsingleproject/:projectname', async(req,res)=>{
  try {
  const data=await Projects.findOne({projectname:projectname})
   .select('projectItems')
-  res.json(data.projectItems)
+  res.json(data)
  } catch (error) {
   res.json({error});
  }
