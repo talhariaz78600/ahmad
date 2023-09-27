@@ -112,10 +112,10 @@ try {
   res.status(500).json({error});
 }
 })
-router.get('/getsingleproject', async(req,res)=>{
-  const id=req.header('id')
+router.get('/getsingleproject/:projectname', async(req,res)=>{
+  const projectname=req.params.projectname;
  try {
- const data=await Projects.findById({_id:id})
+ const data=await Projects.findOne({projectname:projectname})
   .select('projectItems')
   res.json(data.projectItems)
  } catch (error) {

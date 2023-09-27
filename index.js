@@ -1,12 +1,13 @@
 const express=require('express');
 const connectToMongo=require('./db');
-
+const bodyParser = require('body-parser');
 const cors=require('cors')
 const app = express()
 const port =process.env.port|| 4000;
 app.use(express.json())
-app.use(express.json({ limit: '100mb' }));
-app.use(express.urlencoded({ limit: '100mb', extended: true }));
+app.use(bodyParser.json({ limit: '100mb' }));
+// app.use(express.json({ limit: '100mb' }));
+// app.use(express.urlencoded({ limit: '100mb', extended: true }));
 app.use(cors());
 connectToMongo();
 ///avilable routes////////
