@@ -116,10 +116,11 @@ router.get('/getsingleproject/:projectname', async(req,res)=>{
   const projectname=req.params.projectname;
  try {
  const data=await Projects.findOne({projectname:projectname})
-  .select('projectItems')
+  .select('projectItems projectdescription')
   res.json(data)
  } catch (error) {
   res.json({error});
  }
 })
+
 module.exports=router;
